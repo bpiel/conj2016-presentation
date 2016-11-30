@@ -1,0 +1,42 @@
+conj 2016 presentation notes
+- who am I?
+-- programming most of my life
+-- professionally for 15+ years
+-- clojure for 4 years
+-- MA/RJ
+
+- the hook
+"Here to preset Sayid"
+Sayid has changed my life (for the better)
+
+- the problem
+-- (bill frown?)
+-- code sprinkling (fairy dust)
+-- step-through
+-- inspiration: clojure.tools.trace
+
+- omniscience
+"Debugging
+with
+OMNISCIENCE"
+
+
+- the claim
+"Sayid can (largely) replace these other techniques and tools."
+-- list
+
+- demo
+-- simple -- tacos?
+-- web  -- luminus? taco server?
+-- profiling
+-- everything on the list done?
+
+- internals?
+
+- limitations /problems
+
+- future work
+-- apache 2
+-- vim
+-- inner tracing better
+-- faster emacs?

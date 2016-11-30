@@ -1,0 +1,120 @@
+.checklist1{
+    opacity: 1 !important; 
+    visibility: visible !important;
+    font-size: 50px;
+    color: #AAA;
+}
+
+.checklist1.visible{
+    color: #CCFFCC;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease; 
+}
+
+.checklist1.current-fragment {
+    font-size: 70px;
+    color: lightgreen;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease; 
+}
+ 
+
+.fragment-bullet{
+    opacity:0;
+    position:relative;
+    left: -200px;
+    font-family: monospace !important;
+}
+
+.current-fragment > .fragment-bullet{
+    left: 0px;
+    opacity:1;
+    color: yellow;
+    font-size: 50px;
+    margin: 0 20px 0 0;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease; 
+}
+
+.node {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 40px;
+    text-align: left;
+}
+
+.current-fragment {
+    color: yellow;
+}
+
+.current-fragment * {
+    color: yellow !important;
+}
+
+.coll :last-child {
+    vertical-align:bottom;
+}
+
+#dos.fragment{
+    margin-top: -60px;
+}
+
+#dos.visible{
+    margin-top: 0px;
+}
+
+.coll td {
+    padding: 3px !important;
+}
+
+.node-line {
+    opacity: 0 !important;
+    display: block;
+    height: 1px;
+    content: "";
+    white-space: pre;
+    font-family: monospace;
+    font-size: 40px;
+    text-align: left;    
+}
+
+.node-line.visible{
+    opacity: 1 !important;
+    transition: all .2s ease;
+    height: 45px;
+}
+
+.atom:after{
+    content: "\00269b";
+    font-size: 60px;
+}
+
+.atom {
+    position: relative;
+    top: 10px;
+}
+
+#atom-arrow {
+    position:absolute;
+    top:42px;
+    left:239px;
+    display:inline;
+    border:none;
+    background:none;
+    box-shadow:none;
+    width:240px;
+    height:36px;
+}
+
+.qtrees{
+    height: 700px;
+}
+
+.qtrees > .fragment{
+    display:none;
+}
+
+.qtrees > .current-fragment{
+    display:block;
+}

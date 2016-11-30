@@ -1,0 +1,75 @@
+      body {
+        color: #EDEDED;
+        background-color: #000000;
+      }
+      .clojure-keyword {
+        /* clojure-keyword-face */
+        color: #4c83ff;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #4c83ff;
+      }
+      .default {
+        /* default */
+        color: #EDEDED;
+        background-color: #000000;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #FBDE2D;
+      }
+      .rainbow-delimiters-depth-1 {
+        /* rainbow-delimiters-depth-1-face */
+        color: #BB2222;
+      }
+      .rainbow-delimiters-depth-2 {
+        /* rainbow-delimiters-depth-2-face */
+        color: #BB7700;
+      }
+      .rainbow-delimiters-depth-3 {
+        /* rainbow-delimiters-depth-3-face */
+        color: #BBBB22;
+      }
+      .rainbow-delimiters-depth-4 {
+        /* rainbow-delimiters-depth-4-face */
+        color: #11BB11;
+      }
+      .rainbow-delimiters-depth-5 {
+        /* rainbow-delimiters-depth-5-face */
+        color: #33BBBB;
+      }
+      .rainbow-delimiters-depth-6 {
+        /* rainbow-delimiters-depth-6-face */
+        color: #5555AA;
+      }
+      .rainbow-delimiters-depth-7 {
+        /* rainbow-delimiters-depth-7-face */
+        color: #AA55AA;
+      }
+      .rainbow-delimiters-depth-8 {
+        /* rainbow-delimiters-depth-8-face */
+        color: #BBBBBB;
+      }
+      .rainbow-delimiters-depth-9 {
+        /* rainbow-delimiters-depth-9-face */
+        color: #66FF66;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #61CE3C;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #D8FA3C;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }

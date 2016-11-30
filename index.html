@@ -1,0 +1,631 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Sayid - Conj 2016</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="css/bill.css">
+    <link rel="stylesheet" href="css/code.css">
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <!-- START *********************************  -->
+        
+        <!-- Title -->
+        <!-- I'm here to show you Sayid, a debugging and profiling
+tool I made for Clojure.  -->
+	<section data-background-color=white>
+          <img style="border:none;background:none;box-shadow:none" width=600px src="sayid-logo5.png">
+          
+        </section>
+        
+        <!-- Intro -->
+        <!-- But, I'll tell you a bit about myself first.  -->
+	<section>
+          <img align="left" style="float:left;max-height:420px" src="billpiel1.png"/>
+          <div style="text-align:left;margin-left:35%;display:block" data-markdown>
+          # Bill Piel
+          - Philadelphia
+          - programming most of my life
+          - professionally for 15+ years
+          - Clojure for 4 years
+          - work at Magento Analytics
+           - via acquisition of RJMetrics
+          - http://billpiel.com
+          </div>
+          
+        </section>
+        
+        
+        <!-- Hook -->
+        <!-- 
+
+Before I tell you anything else about it, I want to
+emphasize the hugeness of the impact Sayid had on my life. I'd say,
+less impact than having kids, but maybe more than getting a pet, like
+a dog or at least a fish. 
+
+I write clojure code most days and use Sayid on each of those days. It
+has become indespensible.
+
+So, pretty big deal.
+
+ -->
+	<section>
+          <h2>Sayid has changed my life.</h2>
+          <h3 class="fragment fade-up">(for the better!)</h3>
+        </section>
+
+        <!-- the Problem -->
+        <!-- 
+What was the problem Sayid solved? 
+Why did I feel the need... the need for Sayid?
+
+I love clojure. A lot. It does a lot to ease the debugging process
+through interactive development features.
+
+But, I was still left unsatisfied -- especially by a prevelant
+debugging technique that I like to call "code sprinkling".
+
+  -->
+	<section data-markdown>
+          # Unsatisfiying Things
+        </section>
+
+        <!-- 
+
+Before sayid, I'd often step back after an intense bug hunt, and look
+at the mess I'd made of my code. Disturbing stuff. Defs and prints all
+over the place. Wacky things dropped into threading macro
+expressions. I felt like I must be doing something wrong. If you are
+NOT doing this stuff, and DO you like what you are doing, email or
+tweet me or something because I'd really like to know about it.  -->
+        <section>
+          <h2>code sprinkling</h2>
+          <img style="max-height:550px" src="sprinkle.png"/>
+        </section>
+
+        <!-- 
+
+Another method you might use is a step-through debugger. Cider and
+cursive have them. Cool, right? No. It wasn't what I *really*
+wanted. -->
+	<section>
+          <p style="font-size:45px">Step-through debuggers are cool, right?</p>
+          <p style="color:red;font-size:90px" class="fragment fade-up">Not cool enough.</p>
+        </section>
+        
+
+        <!-- The Claim -->
+        <!-- Just before last year's Conj in Philly, I decided that it
+was time for action. I started on what has become Sayid. Now, here's
+the pitch: By using Sayid, these techniques and tools I mentioned are
+largely unnecessary. I hardly ever sprinkle anymore. I hope to sprinkle
+even less in the future.  -->
+	<section data-markdown>
+          # There is another way.
+        </section>
+
+<!-- As I started to form ideas around what I wanted, I did
+research. Maybe something existed that I didn't know about? Well, some
+terms existed. "Reverse Debugger", "Historical Debugger",
+"Time-travelling Debugger". BUT, my favorite, of course, is
+"Omniscient Debugger".  -->
+
+        <section>
+          <h1>First Steps</h1>
+
+          <ul style="font-size:60px;margin-top:30px">
+            <li>What am I trying to do?</li>
+            <li>Has it been done before?</li>
+            <li>Does it have a name?</li>
+          </ul>
+
+        </section>
+        
+        <!-- Omniscience  -->
+        <!-- 
+Ha. Those bugs don't have a chance.
+
+Omniscient Debugging.  -- debugging with full knowledge of what your
+code is up to in there. All the function calls, all the args, all the
+returns. That's what I wanted!
+
+So, I learned, at least I wasn't the first person to think this was a
+good idea.
+
+-->
+        
+	<section style="text-align:left" data-background-image="debugging.png" data-background-size="contain" data-background-color="white">
+          <h2>Debugging</h2>
+          <h2>with</h2>
+          <h1 style="line-height:85px; color:white;background-color:black;text-align:center">OMNISCIENCE</h1>
+        </section>
+
+        <!-- 
+
+And, had it been done before? Yes, of course, everything has been done
+before. But, it doesn't seem to be done very much. There's many
+implentations out there for many of the languages you've heard of. I
+considered mentioning some, but I think this graph of relative google
+search frequencies effectively demonstrates the situation.
+
+As far as googling goes, the IntelliTrace feature of Microsoft's
+Visual Studio is the most popular of this style of debugger. Microsoft
+released it in 2010 and it's been waning ever since. Searches for
+"Rich Hickey" are over taking it right about now. And I seem to be one
+in a handful of people that search for "omniscient debugger" each
+year.
+
+Despite all this, I had to press on and see if I were crazy or maybe
+ just severely misguided.  -->
+        
+        <section>
+          <h3><i>(Un)</i>Popularity of Omniscient Debuggers</h3>
+          <img src="od-searches.png">
+          Google Search Frequency
+        </section>
+        
+        <!-- some Inspiration -->
+        <!-- I do want to mention...  Along the way, there was one
+tool that struck a chord with me -- clojure.tools.trace from Stuart
+Sierra. This tool captures execution activity at the omniscient
+level. But, it just prints it all out like a log. The technical
+mechanism was there and I saw so much potential.
+
+The very first lines of code I wrote for Sayid were completely
+inspired by clojure.tools.trace. Thanks, Stuart.  -->
+	<section data-markdown>
+          # clojure.tools.trace
+          ### by Stuart Sierra
+          # *IS* pretty cool
+        </section>
+
+        <!-- Ok. That's plenty of background. Let's talk about what I'm going to show you.
+
+I have developed a highly contrived example application for
+demostration purposes. It's very simple and makes use of Compojure and
+Liberator. With it, I'll show you how Sayid can be used in different
+contexts. Specifically here, with either unit tests or by curling an
+API.  -->
+        <section>
+          <h2>The Contrived Example Appplication</h2>
+
+          <br>
+          <h3>Two modes of execution:</h3>
+          <ul style="font-size:45px">
+            <li>via test</li>
+            <li>via http request (curl)</li>
+          </ul>
+        </section>
+
+        
+        <!-- 
+
+The book Clojure Brave and True uses a hot-dog vending machine as an
+example in one of its chapters. I like that model, because it's just
+complex enough to be interesting and most people are familiar with
+vending machines, but trying to be original, I went with a taco
+vending machine.  -->
+        <section>
+          <img src="brave-true.png" style="margin-right:40px" />
+          <img src="hotdog-vending-machine.png" />
+          <div style="position:absolute;top:0px;left:0px" class="fragment zoom-in">
+            <img src="taco-glow.png" height="600px" width="1200px" style="border:0;background:none" />
+          </div>
+
+        </section>
+
+        <!-- the TODO List  -->
+        <!-- Before I start the demo, let's layout a checklist so I
+won't forget what I'm doing up here.  
+
+We will look at: 
+- How to trace functions and capturing their execution.
+Viewing the trace.  
+- The different ways you can query and explore the trace.  
+- The magical (yet very buggy) INNER trace feature.  
+- we'll actually find and fix a bug 
+- We'll use curl to hit our http taco API
+- Look at the pretty print buffer 
+- Find and fix another bug!  
+- Use profiling to track down some slow code -->
+        
+        <section>
+          <h1 style="margin: -10px 0;">Demo Checklist</h1>
+          <table style="text-align:left;width:1100px;margin:auto;margin-top:50px">
+            <tr>
+              <td style="width:500px;padding:0;margin:0;vertical-align:top">
+                <div class="checklist1 fragment">
+                  <span class="fragment-bullet">-&gt;&gt;</span>setup
+                </div>
+                <div class="checklist1 fragment">
+                  <span class="fragment-bullet">-&gt;&gt;</span>tracing
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>execute test
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>view trace
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>query trace
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>inner trace
+                </div>
+              </td>
+              <td style="width:500px;vertical-align:top">
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>debug!
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>curl
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>pprint buffer
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>debug!
+                </div>
+                <div class="fragment checklist1">
+                  <span class="fragment-bullet">-&gt;&gt;</span>profiling
+                </div>
+
+              </td>
+            </tr>
+          </table>
+          <div style="text-align:left;width:600px;margin:auto">
+            <div class="fragment fade-up">
+              <h2 style="padding:50px;text-align:center;border: solid 20px #00FF00;color:green;position:relative;background:#338033;position:relative;top:-300px">WE DID IT!</h2>
+            </div>
+          </div>
+        </section>
+
+        <!-- Querying -->
+
+<!-- 
+
+I demonstrated that you can query the trace tree, but I want to
+give a bit more detail about what Sayid can do here.  
+
+Imagine this unrealistically balanced tree is our trace tree. Sayid
+has a powerful interface for querying the nodes, although only two
+ways are currently integrated into emacs. You can query for all calls
+to a function, or a single instance of a call to a function. Here's
+the latter case. 
+
+But, we can modify this query to also return all ancestors.... or all
+descendants... or both. We can add an additional modifier to limit how
+many generations deep the results should go.
+
+Here, we're seeing all of the calls to a given functions. And as
+before, we can apply any combination of query modifiers. 
+
+-->
+        
+        <section>
+          <div class="qtrees">
+            <h2>Querying the Trace Tree</h2>
+            <img src="qtree.png" class="fragment" data-fragment-index="0" style="border:0;background:none" />
+
+            <img src="qtree-i.png" class="fragment" data-fragment-index="1" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="1">instance</div>
+
+            <img src="qtree-ia.png" class="fragment" data-fragment-index="2" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="2">ancestors</div>
+            
+            <img src="qtree-id.png" class="fragment" data-fragment-index="3" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="3">descendants</div>
+            
+            <img src="qtree-iad.png" class="fragment" data-fragment-index="4" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="4">ancestors & descendants</div>
+            
+            <img src="qtree-iad1.png" class="fragment" data-fragment-index="5" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="5">limit generation depth</div>
+            
+            <img src="qtree-f.png" class="fragment" data-fragment-index="6" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="6">all calls to a function</div>
+            
+            <img src="qtree-fad1.png" class="fragment" data-fragment-index="7" style="border:0;background:none" />
+            <div class="fragment" data-fragment-index="7">do it all</div>
+            
+          </div>
+        </section>
+        
+        <!-- Internals -->
+        <!-- 
+I leveraged a lot of what makes Clojure special when writing Sayid. I'll give some detail on each feature.
+
+ -->
+	<section data-markdown>
+          ## Clojure makes it possible!
+          - immutability
+          - structural sharing
+          - vars
+           - alter-var-root
+           - meta data
+          - dynamic scope
+          - atoms
+          - eval source on the fly
+        </section>
+
+
+        <!-- 
+
+Immutability and structural sharing make Sayid much more memory
+efficient. In a more traditional languages with mutable objects, it
+would be necessary to clone captured values to ensure that they hadn't
+changed when you later went to view or query them. That would be
+costly. With Clojure's immutable values, you can be pretty sure they
+aren't changing on you.
+
+I'll attempt to illustrate my simple understanding of structural
+sharing and why I believe it benefits Sayid. These two trees represent
+values that Sayid has captured -- persistent data structures, such as
+a vector. The yellow one on the right and the blue on the left are the
+same except that the yellow tree has an additional element appended to
+it. This structure in the middle represents how I imagined these two
+values in memory. The green nodes are common to both trees. They are
+reused, or shared, memory.
+
+You can imagine that when Sayid captures a larged data structure as
+passes through a series of functions that there would be many green
+nodes and the savings would really add up.
+
+ -->
+
+        
+        <section>
+          <h2 style="position:relative;top:-100px">Immutability & Structural Sharing</h2>
+          <img class="fragment" data-fragment-index="0" style="padding:0 40px 0 0;border:none;background:none;box-shadow:none" height=160px src="tree-red.png">
+          <img class="fragment" data-fragment-index="1" style="position:relative;left:-20px;padding:0 40px 0 40px;border:none;background:none;box-shadow:none" height=160px src="tree-merged.png">
+          <img class="fragment" data-fragment-index="0" style="padding:0 0 0 40px;border:none;background:none;box-shadow:none" height=160px src="tree-green.png">
+        </section>
+        
+<!-- When a function is traced, its root binding is swapped out for a
+sayid function that wraps the original function. The original function
+is stored in the meta data of the var. This makes it simple to trace
+and untrace a function. -->
+        
+        <section>
+          <h2>alter-var-root & Meta Data</h2>
+          <h4>wrapping and unwrapping</h4>
+          <img src="burritos.png" style="padding:0 40px 0 0;border:none;background:none;box-shadow:none" height=450px />
+        </section>
+        
+        <!--
+
+When a traced function is called, Sayid looks at a dynamically-scoped
+var for a atom to write trace data to. This map represents a
+simplified version of that trace data. We've traced and then called a
+function called "func-one". We record the name and then add a
+"children" entry with an atom. Trace data will be written to this atom
+when func-one makes calls to other traced functions.
+
+Func-one's args are captured. It makes a call to func-two, which has
+been traced. Sayid writes trace data from func-two to func-one's
+children atom. The same process plays out for func-two, setting the
+children atom, capturing args and the return values. And then again
+for func-three. Finally, func-one completes and its return value is
+captured.
+
+This is how Sayid builds a trace tree.
+
+          -->
+
+        
+	<section>
+          <div style="height:300px;">
+            <h2 style="position:relative;top:-150px"> Atoms & Dynamic Scope</h2>
+            <table class="coll" style="position:absolute;top:0px;">
+              <tr><td>{</td><td>
+                  <div class="node">
+                    <span class="clojure-keyword">:name</span> func-one
+                    <span class="node-line fragment" style="position:relative;top:-20px" data-fragment-index="0"><span class="clojure-keyword">:children</span> <span class="atom"></span> </span>
+                    <img id="atom-arrow"  class="fragment"  src="arrowright.png" data-fragment-index="2">
+                    <span class="node-line fragment" data-fragment-index="1"><span class="clojure-keyword">:args</span> {...} </span>
+                    <span class="node-line fragment" data-fragment-index="8"><span class="clojure-keyword">:return</span> ...</span>
+                  </div>
+                </td>
+                <td>}</td></tr></table>
+            <table class="coll fragment" data-fragment-index="2" style="position:absolute;top:0px;left:500px;">
+              <tr><td>[</td><td>
+                  <table class="coll">
+                    <tr><td>{</td><td>
+                        <div class="node">
+                          <span class="clojure-keyword">:name</span> func-two
+                          <span class="node-line fragment" style="position:relative;top:-20px" data-fragment-index="3"><span class="clojure-keyword">:children</span> <span class="atom"></span></span>
+                          <span class="node-line fragment" data-fragment-index="4"><span class="clojure-keyword">:args</span> {...} </span>
+                          <span class="node-line fragment" data-fragment-index="5"><span class="clojure-keyword">:return</span> ...</span>
+                        </div>
+                      <td>}</td></tr></table>
+                  <table id='dos' class="coll fragment" data-fragment-index="6">
+                    <tr><td>{</td><td>
+                        <div class="node">
+                          <span class="clojure-keyword">:name</span> func-three
+                          <span class="node-line fragment" style="position:relative;top:-20px" data-fragment-index="7"><span class="clojure-keyword">:children</span> <span class="atom"></span></span>
+                          <span class="node-line fragment" data-fragment-index="7"><span class="clojure-keyword">:args</span> {...} </span>
+                          <span class="node-line fragment" data-fragment-index="7"><span class="clojure-keyword">:return</span> ...</span>
+                        </div>
+                      <td>}</td></tr></table>
+                </td><td>]</td></tr></table>
+          </div>
+        </section>
+
+
+<!-- 
+Inner tracing is where Sayid really gets nuts. 
+The inner trace feature is made possible by our ability to evaluate source code on the fly. 
+Here's an extremely simple function.
+-->
+        <section>
+    <pre style="font-size:50px;width:800px">
+  <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">defn</span> <span class="function-name">f1</span> <span class="rainbow-delimiters-depth-2">[]</span>
+    <span class="rainbow-delimiters-depth-2">(</span><span class="keyword">let</span> <span class="rainbow-delimiters-depth-3">[</span>a <span class="rainbow-delimiters-depth-4">(</span>inc 1<span class="rainbow-delimiters-depth-4">)</span><span class="rainbow-delimiters-depth-3">]</span>
+      a<span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span></pre>
+        </section>
+        
+<!-- And here's the monster that inner trace produces. I'm not going
+to go into the details, but just be in awe of its sheer size.  -->
+        
+        <section>
+              <pre style="font-size:xx-small">
+<span class="rainbow-delimiters-depth-1"> (</span><span class="type">clojure.core</span><span class="default">/</span>fn
+  <span class="rainbow-delimiters-depth-2">(</span><span class="rainbow-delimiters-depth-3">[]</span>
+   <span class="rainbow-delimiters-depth-3">(</span><span class="type">clojure.core</span><span class="default">/</span>let
+    <span class="rainbow-delimiters-depth-4">[</span>$$
+     <span class="rainbow-delimiters-depth-5">(</span><span class="type">clojure.core</span><span class="default">/</span>atom <span class="rainbow-delimiters-depth-6">{}</span><span class="rainbow-delimiters-depth-5">)</span>
+     $return
+     <span class="rainbow-delimiters-depth-5">(</span><span class="type">com.billpiel.sayid.inner-trace2</span><span class="default">/</span>tr-let-ret
+      $$
+      '<span class="rainbow-delimiters-depth-6">{</span><span class="clojure-keyword">:src-pos</span>
+        <span class="rainbow-delimiters-depth-7">{</span><span class="clojure-keyword">:file</span>
+         <span class="string">"/home/bill/repos/sayid/src/com/billpiel/sayid/inner_trace2.clj"</span>,
+         <span class="clojure-keyword">:end-column</span> 25,
+         <span class="clojure-keyword">:end-line</span> 642,
+         <span class="clojure-keyword">:column</span> 6,
+         <span class="clojure-keyword">:line</span> 642<span class="rainbow-delimiters-depth-7">}</span>,
+        <span class="clojure-keyword">:ns</span> <span class="type">com.billpiel.sayid.inner-trace2</span>,
+        <span class="clojure-keyword">:name</span> let*,
+        <span class="clojure-keyword">:inner-path</span> <span class="rainbow-delimiters-depth-7">[]</span>,
+        <span class="clojure-keyword">:parent-name</span>
+        <span class="type">com.billpiel.sayid.inner-trace2/com.billpiel.sayid.inner-trace2</span><span class="default">/</span>f1,
+        <span class="clojure-keyword">:xpanded-parent</span> <span class="constant">nil</span>,
+        <span class="clojure-keyword">:macro?</span> <span class="constant">nil</span>,
+        <span class="clojure-keyword">:form</span> <span class="rainbow-delimiters-depth-7">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-8">[</span>a <span class="rainbow-delimiters-depth-9">(</span>inc 1<span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">]</span> a<span class="rainbow-delimiters-depth-7">)</span>,
+        <span class="clojure-keyword">:inner-path-chain</span> <span class="rainbow-delimiters-depth-7">[</span><span class="rainbow-delimiters-depth-8">[]</span><span class="rainbow-delimiters-depth-7">]</span>,
+        <span class="clojure-keyword">:xpanded-frm</span> <span class="rainbow-delimiters-depth-7">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-8">[</span>a <span class="rainbow-delimiters-depth-9">(</span>inc 1<span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">]</span> a<span class="rainbow-delimiters-depth-7">)</span><span class="rainbow-delimiters-depth-6">}</span>
+      <span class="rainbow-delimiters-depth-6">(</span><span class="type">clojure.core</span><span class="default">/</span>let
+       <span class="rainbow-delimiters-depth-7">[</span>a
+        <span class="rainbow-delimiters-depth-8">(</span>inc 1<span class="rainbow-delimiters-depth-8">)</span>
+        _
+        <span class="rainbow-delimiters-depth-8">(</span><span class="type">com.billpiel.sayid.inner-trace2</span><span class="default">/</span>tr-let-bind
+         '<span class="rainbow-delimiters-depth-9">{</span><span class="clojure-keyword">:src-pos</span>
+           <span class="rainbow-delimiters-depth-1">{</span><span class="clojure-keyword">:file</span>
+            <span class="string">"/home/bill/repos/sayid/src/com/billpiel/sayid/inner_trace2.clj"</span>,
+            <span class="clojure-keyword">:end-column</span> 25,
+            <span class="clojure-keyword">:end-line</span> 642,
+            <span class="clojure-keyword">:column</span> 6,
+            <span class="clojure-keyword">:line</span> 642<span class="rainbow-delimiters-depth-1">}</span>,
+           <span class="clojure-keyword">:ns</span> <span class="type">com.billpiel.sayid.inner-trace2</span>
+ ,
+           <span class="clojure-keyword">:name</span> let*,
+           <span class="clojure-keyword">:inner-path</span> <span class="rainbow-delimiters-depth-1">[]</span>,
+           <span class="clojure-keyword">:parent-name</span>
+           <span class="type">com.billpiel.sayid.inner-trace2/com.billpiel.sayid.inner-trace2</span><span class="default">/</span>f1,
+           <span class="clojure-keyword">:xpanded-parent</span> <span class="constant">nil</span>,
+          <span class="clojure-keyword">:macro?</span> <span class="constant">nil</span>,
+          <span class="clojure-keyword">:form</span> <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-2">[</span>a <span class="rainbow-delimiters-depth-3">(</span>inc 1<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">]</span> a<span class="rainbow-delimiters-depth-1">)</span>,
+          <span class="clojure-keyword">:inner-path-chain</span> <span class="rainbow-delimiters-depth-1">[</span><span class="rainbow-delimiters-depth-2">[]</span><span class="rainbow-delimiters-depth-1">]</span>,
+          <span class="clojure-keyword">:xpanded-frm</span> <span class="rainbow-delimiters-depth-1">(</span><span class="keyword">let*</span> <span class="rainbow-delimiters-depth-2">[</span>a <span class="rainbow-delimiters-depth-3">(</span>inc 1<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">]</span> a<span class="rainbow-delimiters-depth-1">)</span><span class="rainbow-delimiters-depth-9">}</span>
+        $$
+        a
+        'a
+        '<span class="rainbow-delimiters-depth-9">(</span>inc 1<span class="rainbow-delimiters-depth-9">)</span><span class="rainbow-delimiters-depth-8">)</span><span class="rainbow-delimiters-depth-7">]</span>
+      a<span class="rainbow-delimiters-depth-6">)</span><span class="rainbow-delimiters-depth-5">)</span><span class="rainbow-delimiters-depth-4">]</span>
+   <span class="rainbow-delimiters-depth-4">(</span><span class="type">com.billpiel.sayid.inner-trace2</span><span class="default">/</span>record-trace-tree! $$<span class="rainbow-delimiters-depth-4">)</span>
+   $return<span class="rainbow-delimiters-depth-3">)</span><span class="rainbow-delimiters-depth-2">)</span><span class="rainbow-delimiters-depth-1">)</span></pre>
+
+        </section>
+        
+        <!-- Limitations / Problems -->
+        <!--  -->
+
+	<section data-markdown>
+          # Limitations & Problems
+          - The Bigness Problem
+          - dynamic vars and mutables not captured
+          - multimethod support messy
+          - Inner trace breaks A LOT
+        </section>
+        
+        <!-- Future -->
+        <!-- 
+
+It's great that Sayid has made things so much better for me, really
+great. But I'd also like to see it benefit others as well. That's a
+big part of why I applied to speak.
+
+I welcome any sort of help or feedback.
+
+Sayid is open source under Apache 2. It's on github and clojars. I
+promise to submit to MELPA, but I've been lazy about that.
+
+I have no experience with vim, but if someone wanted to write a vim
+integration, I would be only too happy to answer questions, improve
+docs or help in any other way.
+
+As far as my personal roadmap, I'd like to fix inner tracing. It might
+need a full rewrite -- it would not be the first. I also want to see
+if I can speed up the emacs integration. 
+
+-->
+	<section data-markdown>
+          # The Future
+          - Open Source -- Apache 2 License
+            - on Github
+            - PRs and Issues welcome
+          - more editor integrations
+            - vim
+              - need help
+          - my roadmap
+           - submit emacs package to MELPA
+           - better inner tracing
+           - faster emacs integration
+        </section>
+        
+        <!-- THE END -->
+        <!-- Yep, this is it. I hope I convinced someone here to give
+        this thing a try. Sayid is up on github. This presentation is
+        up there as well. Hope you are enjoying the conference. Bye.-->
+	<section data-markdown>
+          # THE END
+
+          #### bill@billpiel.com
+          #### @bpiel
+          #### http://bpiel.github.io/sayid
+          #### https://github.com/bpiel/conj2016-presentation
+        </section>
+        
+        <!-- END *********************************  -->	
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      history: true,
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+      { src: 'plugin/markdown/marked.js' },
+      { src: 'plugin/markdown/markdown.js' },
+      { src: 'plugin/notes/notes.js', async: true },
+      { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+      ]
+      });
+    </script>
+  </body>
+</html>
